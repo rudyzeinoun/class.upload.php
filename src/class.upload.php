@@ -3394,7 +3394,7 @@ class Upload {
 
                 // checks if the destination directory is writeable, and attempt to make it writeable
                 $hash = md5($this->file_dst_name_body . rand(1, 1000));
-                if ($this->processed && !($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a+'))) {
+                if ($this->processed && !($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a'))) {
                     if ($this->dir_auto_chmod) {
                         $this->log .= '- ' . $this->file_dst_path . ' is not writeable. Attempting chmod:';
                         if (!@chmod($this->file_dst_path, $this->dir_chmod)) {
@@ -3403,7 +3403,7 @@ class Upload {
                             $this->error = $this->translate('destination_dir_write');
                         } else {
                             $this->log .= ' success<br />';
-                            if (!($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a+'))) { // we re-check
+                            if (!($f = @fopen($this->file_dst_path . $hash . (!empty($this->file_dst_name_ext) ? '.' . $this->file_dst_name_ext : ''), 'a'))) { // we re-check
                                 $this->processed = false;
                                 $this->error = $this->translate('destination_dir_write');
                             } else {
