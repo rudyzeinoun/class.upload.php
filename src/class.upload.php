@@ -2482,7 +2482,7 @@ class Upload {
                             $f = @finfo_open(FILEINFO_MIME);
                         }
                         if ($f) {
-                            $mime = finfo_file($f, realpath($this->file_src_pathname));
+                            $mime = finfo_file($f, $this->realpath($this->file_src_pathname));
                             finfo_close($f);
                             $this->file_src_mime = $mime;
                             $this->log .= '&nbsp;&nbsp;&nbsp;&nbsp;MIME type detected as ' . $this->file_src_mime . ' by Fileinfo PECL extension<br />';
@@ -2498,7 +2498,7 @@ class Upload {
                     } elseif (@class_exists('finfo', false)) {
                         $f = new finfo( FILEINFO_MIME );
                         if ($f) {
-                            $this->file_src_mime = $f->file(realpath($this->file_src_pathname));
+                            $this->file_src_mime = $f->file($this->realpath($this->file_src_pathname));
                             $this->log .= '- MIME type detected as ' . $this->file_src_mime . ' by Fileinfo PECL extension<br />';
                             if (preg_match("/^([\.\w-]+)\/([\.\w-]+)(.*)$/i", $this->file_src_mime)) {
                                 $this->file_src_mime = preg_replace("/^([\.\w-]+)\/([\.\w-]+)(.*)$/i", '$1/$2', $this->file_src_mime);
@@ -5239,5 +5239,9 @@ class Upload {
             fclose($file);
         }
         return true;
+    }
+    function realpath($path) {
+        if (preg_match('/^s3:', $path) === 1) return $path;
+        else return realpath($path);
     }
 }
