@@ -5241,7 +5241,7 @@ class Upload {
         return true;
     }
     function realpath($path) {
-        if (preg_match('/^s3:', $path) === 1) return $path;
+        if (preg_match('/^s3:/', $path) === 1) return $path;
         else return realpath($path);
     }
 }
